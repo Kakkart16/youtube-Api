@@ -71,6 +71,19 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'core.wsgi.application'
 
+CELERY_BROKER_URL = 'redis://localhost:6379/0'
+CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
+
+CELERY_BEAT_SCHEDULE = {
+    # 'task1': {
+    #     'task': 'youtubeApi.tasks.fetch_youtube_videos', 
+    #     'schedule': 30.0,  # Run every 10 seconds
+    # },
+    'task2': {
+        'task': 'youtubeApi.tasks.sike', 
+        'schedule': 10.0,  # Run every 10 seconds
+    },
+}
 
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases

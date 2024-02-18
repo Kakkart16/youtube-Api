@@ -7,5 +7,8 @@ class Video(models.Model):
     published_datetime = models.DateTimeField()
     thumbnail_url = models.URLField()
 
+    class Meta:
+        ordering = ['-published_datetime']
+    
     def __str__(self):
         return self.title

@@ -20,5 +20,8 @@ class Migration(migrations.Migration):
                 ('published_datetime', models.DateTimeField()),
                 ('thumbnail_url', models.URLField()),
             ],
+            options={
+                'ordering': ['-published_datetime'],
+            },
         ),
     ]
