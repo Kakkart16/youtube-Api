@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'youtubeApi',
+    'django_celery_results',
 ]
 
 MIDDLEWARE = [
@@ -70,20 +71,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'core.wsgi.application'
-
-CELERY_BROKER_URL = 'redis://localhost:6379/0'
-CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
-
-CELERY_BEAT_SCHEDULE = {
-    # 'task1': {
-    #     'task': 'youtubeApi.tasks.fetch_youtube_videos', 
-    #     'schedule': 30.0,  # Run every 10 seconds
-    # },
-    'task2': {
-        'task': 'youtubeApi.tasks.sike', 
-        'schedule': 10.0,  # Run every 10 seconds
-    },
-}
 
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
@@ -136,3 +123,18 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Celery Configuration
+
+CELERY_BROKER_URL = 'redis://localhost:6379/0'
+# CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
+CELERY_TIMEZONE = "Asia/Kolkata"
+CELERY_RESULT_BACKEND = 'django-db'
+CELERY_RESULT_EXTENDED = True
+
+CELERY_BEAT_SCHEDULE = {
+    'my-periodic-task': {
+        'task': 'youtubeApi.tasks.fetch_youtube_videos',
+        'schedule': 60,
+    },
+}

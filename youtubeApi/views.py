@@ -10,9 +10,7 @@ from rest_framework.pagination import PageNumberPagination
 
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
-
-
-key='AIzaSyBNPQab5YWKiOWdxeoRB_qqPBAeBPaoH-s'
+from .tasks import fetch_youtube_videos
 
 class VideoPagination(PageNumberPagination):
     page_size = 10
@@ -27,7 +25,7 @@ class VideoList(ListAPIView):
 
 def dashboard(request):
     search_query = request.GET.get('search', '')
-    videos = Video.objects.all()
+    videos = Video.objects.all().order_by('-published_datetime')
 
     if search_query:
         videos = videos.filter(title__icontains=search_query)
